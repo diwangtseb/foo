@@ -1,0 +1,36 @@
+syntax = "proto3";
+
+package api.foo;
+
+import "google/api/annotations.proto";
+
+option go_package = "foo/api/foo;foo";
+option java_multiple_files = true;
+option java_package = "api.foo";
+
+service Foo {
+	rpc CreateFoo (CreateFooRequest) returns (CreateFooReply){
+		option(google.api.http) = {
+			get: "/createfoo/name"
+		};
+	};
+	rpc UpdateFoo (UpdateFooRequest) returns (UpdateFooReply);
+	rpc DeleteFoo (DeleteFooRequest) returns (DeleteFooReply);
+	rpc GetFoo (GetFooRequest) returns (GetFooReply);
+	rpc ListFoo (ListFooRequest) returns (ListFooReply);
+}
+
+message CreateFooRequest {}
+message CreateFooReply {}
+
+message UpdateFooRequest {}
+message UpdateFooReply {}
+
+message DeleteFooRequest {}
+message DeleteFooReply {}
+
+message GetFooRequest {}
+message GetFooReply {}
+
+message ListFooRequest {}
+message ListFooReply {}
