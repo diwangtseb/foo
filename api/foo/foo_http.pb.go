@@ -23,13 +23,16 @@ type FooHTTPServer interface {
 
 func RegisterFooHTTPServer(s *http.Server, srv FooHTTPServer) {
 	r := s.Route("/")
-	r.GET("/createfoo/name", _Foo_CreateFoo0_HTTP_Handler(srv))
+	r.GET("/createfoo/{name}", _Foo_CreateFoo0_HTTP_Handler(srv))
 }
 
 func _Foo_CreateFoo0_HTTP_Handler(srv FooHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in CreateFooRequest
 		if err := ctx.BindQuery(&in); err != nil {
+			return err
+		}
+		if err := ctx.BindVars(&in); err != nil {
 			return err
 		}
 		http.SetOperation(ctx, "/api.foo.Foo/CreateFoo")
@@ -59,7 +62,7 @@ func NewFooHTTPClient(client *http.Client) FooHTTPClient {
 
 func (c *FooHTTPClientImpl) CreateFoo(ctx context.Context, in *CreateFooRequest, opts ...http.CallOption) (*CreateFooReply, error) {
 	var out CreateFooReply
-	pattern := "/createfoo/name"
+	pattern := "/createfoo/{name}"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/api.foo.Foo/CreateFoo"))
 	opts = append(opts, http.PathTemplate(pattern))

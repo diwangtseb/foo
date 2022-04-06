@@ -6,11 +6,17 @@ info:
     title: Foo API
     version: 0.0.1
 paths:
-    /createfoo/name:
+    /createfoo/{name}:
         get:
             tags:
                 - Foo
             operationId: Foo_CreateFoo
+            parameters:
+                - name: name
+                  in: path
+                  required: true
+                  schema:
+                    type: string
             responses:
                 "200":
                     description: OK
@@ -22,6 +28,8 @@ components:
     schemas:
         CreateFooReply:
             type: object
-            properties: {}
+            properties:
+                msg:
+                    type: string
 tags:
     - name: Foo

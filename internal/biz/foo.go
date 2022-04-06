@@ -2,8 +2,6 @@ package biz
 
 import (
 	"context"
-	"log"
-
 	"github.com/go-kratos/kratos/v2/log"
 )
 
@@ -17,7 +15,7 @@ type FooUseCase struct {
 
 func NewFooUseCase(logger log.Logger) *FooUseCase {
 	return &FooUseCase{
-		log: logger,
+		log: log.NewHelper(logger),
 	}
 }
 

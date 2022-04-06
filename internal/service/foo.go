@@ -2,20 +2,28 @@ package service
 
 import (
 	"context"
+	"foo/internal/biz"
 
 	pb "foo/api/foo"
 )
 
 type FooService struct {
 	pb.UnimplementedFooServer
+	fuc *biz.FooUseCase
 }
 
-func NewFooService() *FooService {
-	return &FooService{}
+func NewFooService(fuc *biz.FooUseCase) *FooService {
+	return &FooService{fuc: fuc}
 }
 
 func (s *FooService) CreateFoo(ctx context.Context, req *pb.CreateFooRequest) (*pb.CreateFooReply, error) {
-	return &pb.CreateFooReply{}, nil
+	r,err := s.fuc.CreateFoo(ctx,&biz.Foo{Msg: req.Name})
+	if err != nil {
+		return nil,err
+	}
+	return &pb.CreateFooReply{
+		Msg: r.Msg,
+	}, nil
 }
 func (s *FooService) UpdateFoo(ctx context.Context, req *pb.UpdateFooRequest) (*pb.UpdateFooReply, error) {
 	return &pb.UpdateFooReply{}, nil

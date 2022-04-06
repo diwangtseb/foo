@@ -8,6 +8,7 @@ import (
 	"github.com/go-kratos/kratos/v2/log"
 	"github.com/go-kratos/kratos/v2/middleware/recovery"
 	"github.com/go-kratos/kratos/v2/transport/http"
+	"github.com/go-kratos/swagger-api/openapiv2"
 )
 
 // NewHTTPServer new a HTTP server.
@@ -27,6 +28,8 @@ func NewHTTPServer(c *conf.Server, sfoo *service.FooService, logger log.Logger) 
 		opts = append(opts, http.Timeout(c.Http.Timeout.AsDuration()))
 	}
 	srv := http.NewServer(opts...)
+	openAPIhandler := openapiv2.NewHandler()
+	srv.HandlePrefix("/q/", openAPIhandler)
 	foo.RegisterFooHTTPServer(srv, sfoo)
 	return srv
 }

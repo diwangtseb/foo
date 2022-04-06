@@ -11,7 +11,7 @@ option java_package = "api.foo";
 service Foo {
 	rpc CreateFoo (CreateFooRequest) returns (CreateFooReply){
 		option(google.api.http) = {
-			get: "/createfoo/name"
+			get: "/createfoo/{name}"
 		};
 	};
 	rpc UpdateFoo (UpdateFooRequest) returns (UpdateFooReply);
@@ -20,8 +20,12 @@ service Foo {
 	rpc ListFoo (ListFooRequest) returns (ListFooReply);
 }
 
-message CreateFooRequest {}
-message CreateFooReply {}
+message CreateFooRequest {
+	string name = 1;
+}
+message CreateFooReply {
+	string msg = 1;
+}
 
 message UpdateFooRequest {}
 message UpdateFooReply {}
