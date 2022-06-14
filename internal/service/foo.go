@@ -17,9 +17,9 @@ func NewFooService(fuc *biz.FooUseCase) *FooService {
 }
 
 func (s *FooService) CreateFoo(ctx context.Context, req *pb.CreateFooRequest) (*pb.CreateFooReply, error) {
-	r,err := s.fuc.CreateFoo(ctx,&biz.Foo{Msg: req.Name})
+	r, err := s.fuc.CreateFoo(ctx, &biz.Foo{Msg: req.Name})
 	if err != nil {
-		return nil,err
+		return nil, pb.ErrorUnknown("create foo failed")
 	}
 	return &pb.CreateFooReply{
 		Msg: r.Msg,

@@ -9,6 +9,7 @@ require (
 	go.opentelemetry.io/otel v1.6.2
 	go.opentelemetry.io/otel/exporters/jaeger v1.6.2
 	go.opentelemetry.io/otel/sdk v1.6.2
+	go.uber.org/zap v1.21.0
 	google.golang.org/genproto v0.0.0-20220222213610-43724f9ea8cf
 	google.golang.org/grpc v1.44.0
 	google.golang.org/protobuf v1.27.1
@@ -29,6 +30,8 @@ require (
 	github.com/imdario/mergo v0.3.12 // indirect
 	github.com/rakyll/statik v0.1.7 // indirect
 	go.opentelemetry.io/otel/trace v1.6.2 // indirect
+	go.uber.org/atomic v1.7.0 // indirect
+	go.uber.org/multierr v1.6.0 // indirect
 	golang.org/x/net v0.0.0-20210405180319-a5a99cb37ef4 // indirect
 	golang.org/x/sync v0.0.0-20210220032951-036812b2e83c // indirect
 	golang.org/x/sys v0.0.0-20210816074244-15123e1e1f71 // indirect
