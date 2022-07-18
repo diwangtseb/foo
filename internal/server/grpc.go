@@ -1,18 +1,47 @@
 package server
 
 import (
-	"foo/api/foo"
+	v1 "foo/api/foo/v1"
 	"foo/internal/conf"
 	"foo/internal/service"
 
-	"github.com/go-kratos/kratos/v2/log"
 	"github.com/go-kratos/kratos/v2/middleware/recovery"
 	"github.com/go-kratos/kratos/v2/middleware/tracing"
 	"github.com/go-kratos/kratos/v2/transport/grpc"
+	"go.opentelemetry.io/otel"
+	"go.opentelemetry.io/otel/attribute"
+	"go.opentelemetry.io/otel/exporters/jaeger"
+	"go.opentelemetry.io/otel/sdk/resource"
+	tracesdk "go.opentelemetry.io/otel/sdk/trace"
+	semconv "go.opentelemetry.io/otel/semconv/v1.7.0"
 )
 
+func setTracerProvider(url string) error {
+	// Create the Jaeger exporter
+	exp, err := jaeger.New(jaeger.WithCollectorEndpoint(jaeger.WithEndpoint(url)))
+	if err != nil {
+		return err
+	}
+	tp := tracesdk.NewTracerProvider(
+		// Set the sampling rate based on the parent span to 100%
+		tracesdk.WithSampler(tracesdk.ParentBased(tracesdk.TraceIDRatioBased(1.0))),
+		// Always be sure to batch in production.
+		tracesdk.WithBatcher(exp),
+		// Record information about this application in an Resource.
+		tracesdk.WithResource(resource.NewSchemaless(
+			semconv.ServiceNameKey.String("Name"),
+			attribute.String("env", "dev"),
+		)),
+	)
+	otel.SetTracerProvider(tp)
+	return nil
+}
+
 // NewGRPCServer new a gRPC server.
-func NewGRPCServer(c *conf.Server, sfoo *service.FooService, logger log.Logger) *grpc.Server {
+func NewGRPCServer(c *conf.Server, sfoo *service.FooService) *grpc.Server {
+	if err := setTracerProvider(c.Jager.Addr); err != nil {
+		panic(err)
+	}
 	var opts = []grpc.ServerOption{
 		grpc.Middleware(
 			recovery.Recovery(),
@@ -29,6 +58,6 @@ func NewGRPCServer(c *conf.Server, sfoo *service.FooService, logger log.Logger) 
 		opts = append(opts, grpc.Timeout(c.Grpc.Timeout.AsDuration()))
 	}
 	srv := grpc.NewServer(opts...)
-	foo.RegisterFooServer(srv, sfoo)
+	v1.RegisterFooServer(srv, sfoo)
 	return srv
 }

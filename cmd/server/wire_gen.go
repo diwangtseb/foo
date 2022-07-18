@@ -22,7 +22,7 @@ func wireApp(confServer *conf.Server, data *conf.Data, logger log.Logger) (*krat
 	fooUseCase := biz.NewFooUseCase(logger)
 	fooService := service.NewFooService(fooUseCase)
 	httpServer := server.NewHTTPServer(confServer, fooService, logger)
-	grpcServer := server.NewGRPCServer(confServer, fooService, logger)
+	grpcServer := server.NewGRPCServer(confServer, fooService)
 	app := newApp(logger, httpServer, grpcServer)
 	return app, func() {
 	}, nil

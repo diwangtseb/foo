@@ -4,7 +4,7 @@ import (
 	"context"
 	"foo/internal/biz"
 
-	pb "foo/api/foo"
+	pb "foo/api/foo/v1"
 )
 
 type FooService struct {

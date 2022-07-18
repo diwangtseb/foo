@@ -2,9 +2,9 @@
 // versions:
 // - protoc-gen-go-grpc v1.2.0
 // - protoc             v3.19.4
-// source: api/foo/foo.proto
+// source: foo/v1/foo.proto
 
-package foo
+package v1
 
 import (
 	context "context"
@@ -39,7 +39,7 @@ func NewFooClient(cc grpc.ClientConnInterface) FooClient {
 
 func (c *fooClient) CreateFoo(ctx context.Context, in *CreateFooRequest, opts ...grpc.CallOption) (*CreateFooReply, error) {
 	out := new(CreateFooReply)
-	err := c.cc.Invoke(ctx, "/api.foo.Foo/CreateFoo", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/foo.v1.Foo/CreateFoo", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -48,7 +48,7 @@ func (c *fooClient) CreateFoo(ctx context.Context, in *CreateFooRequest, opts ..
 
 func (c *fooClient) UpdateFoo(ctx context.Context, in *UpdateFooRequest, opts ...grpc.CallOption) (*UpdateFooReply, error) {
 	out := new(UpdateFooReply)
-	err := c.cc.Invoke(ctx, "/api.foo.Foo/UpdateFoo", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/foo.v1.Foo/UpdateFoo", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -57,7 +57,7 @@ func (c *fooClient) UpdateFoo(ctx context.Context, in *UpdateFooRequest, opts ..
 
 func (c *fooClient) DeleteFoo(ctx context.Context, in *DeleteFooRequest, opts ...grpc.CallOption) (*DeleteFooReply, error) {
 	out := new(DeleteFooReply)
-	err := c.cc.Invoke(ctx, "/api.foo.Foo/DeleteFoo", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/foo.v1.Foo/DeleteFoo", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -66,7 +66,7 @@ func (c *fooClient) DeleteFoo(ctx context.Context, in *DeleteFooRequest, opts ..
 
 func (c *fooClient) GetFoo(ctx context.Context, in *GetFooRequest, opts ...grpc.CallOption) (*GetFooReply, error) {
 	out := new(GetFooReply)
-	err := c.cc.Invoke(ctx, "/api.foo.Foo/GetFoo", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/foo.v1.Foo/GetFoo", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -75,7 +75,7 @@ func (c *fooClient) GetFoo(ctx context.Context, in *GetFooRequest, opts ...grpc.
 
 func (c *fooClient) ListFoo(ctx context.Context, in *ListFooRequest, opts ...grpc.CallOption) (*ListFooReply, error) {
 	out := new(ListFooReply)
-	err := c.cc.Invoke(ctx, "/api.foo.Foo/ListFoo", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/foo.v1.Foo/ListFoo", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -136,7 +136,7 @@ func _Foo_CreateFoo_Handler(srv interface{}, ctx context.Context, dec func(inter
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/api.foo.Foo/CreateFoo",
+		FullMethod: "/foo.v1.Foo/CreateFoo",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(FooServer).CreateFoo(ctx, req.(*CreateFooRequest))
@@ -154,7 +154,7 @@ func _Foo_UpdateFoo_Handler(srv interface{}, ctx context.Context, dec func(inter
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/api.foo.Foo/UpdateFoo",
+		FullMethod: "/foo.v1.Foo/UpdateFoo",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(FooServer).UpdateFoo(ctx, req.(*UpdateFooRequest))
@@ -172,7 +172,7 @@ func _Foo_DeleteFoo_Handler(srv interface{}, ctx context.Context, dec func(inter
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/api.foo.Foo/DeleteFoo",
+		FullMethod: "/foo.v1.Foo/DeleteFoo",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(FooServer).DeleteFoo(ctx, req.(*DeleteFooRequest))
@@ -190,7 +190,7 @@ func _Foo_GetFoo_Handler(srv interface{}, ctx context.Context, dec func(interfac
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/api.foo.Foo/GetFoo",
+		FullMethod: "/foo.v1.Foo/GetFoo",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(FooServer).GetFoo(ctx, req.(*GetFooRequest))
@@ -208,7 +208,7 @@ func _Foo_ListFoo_Handler(srv interface{}, ctx context.Context, dec func(interfa
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/api.foo.Foo/ListFoo",
+		FullMethod: "/foo.v1.Foo/ListFoo",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(FooServer).ListFoo(ctx, req.(*ListFooRequest))
@@ -220,7 +220,7 @@ func _Foo_ListFoo_Handler(srv interface{}, ctx context.Context, dec func(interfa
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var Foo_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "api.foo.Foo",
+	ServiceName: "foo.v1.Foo",
 	HandlerType: (*FooServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
@@ -245,5 +245,5 @@ var Foo_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "api/foo/foo.proto",
+	Metadata: "foo/v1/foo.proto",
 }

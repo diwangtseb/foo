@@ -2,6 +2,7 @@ package biz
 
 import (
 	"context"
+
 	"github.com/go-kratos/kratos/v2/log"
 )
 
@@ -20,6 +21,6 @@ func NewFooUseCase(logger log.Logger) *FooUseCase {
 }
 
 func (f *FooUseCase) CreateFoo(ctx context.Context, foo *Foo) (*Foo, error) {
-	f.log.WithContext(ctx).Infof("CreateFoo: %v", foo.Msg)
+	f.log.Debugw("____msg", foo.Msg)
 	return foo, nil
 }

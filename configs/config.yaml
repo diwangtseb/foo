@@ -5,6 +5,8 @@ server:
   grpc:
     addr: 0.0.0.0:9000
     timeout: 1s
+  jager:
+    addr: http://localhost:14268/api/traces
 data:
   database:
     driver: mysql

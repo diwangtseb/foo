@@ -57,6 +57,7 @@ all:
 	make api;
 	make config;
 	make generate;
+	make errors;
 
 # show help
 help:
