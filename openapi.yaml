@@ -6,7 +6,7 @@ info:
     title: Foo API
     version: 0.0.1
 paths:
-    /createfoo/{name}:
+    /create/foo/{name}:
         get:
             tags:
                 - Foo
@@ -20,10 +20,7 @@ paths:
             responses:
                 "200":
                     description: OK
-                    content:
-                        application/json:
-                            schema:
-                                $ref: '#/components/schemas/CreateFooReply'
+                    content: {}
                 default:
                     description: Default error response
                     content:
@@ -32,11 +29,6 @@ paths:
                                 $ref: '#/components/schemas/Status'
 components:
     schemas:
-        CreateFooReply:
-            type: object
-            properties:
-                msg:
-                    type: string
         GoogleProtobufAny:
             type: object
             properties:

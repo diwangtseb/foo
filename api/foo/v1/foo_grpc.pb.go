@@ -11,6 +11,7 @@ import (
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
+	emptypb "google.golang.org/protobuf/types/known/emptypb"
 )
 
 // This is a compile-time assertion to ensure that this generated file
@@ -22,9 +23,9 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type FooClient interface {
-	CreateFoo(ctx context.Context, in *CreateFooRequest, opts ...grpc.CallOption) (*CreateFooReply, error)
-	UpdateFoo(ctx context.Context, in *UpdateFooRequest, opts ...grpc.CallOption) (*UpdateFooReply, error)
-	DeleteFoo(ctx context.Context, in *DeleteFooRequest, opts ...grpc.CallOption) (*DeleteFooReply, error)
+	CreateFoo(ctx context.Context, in *CreateFooRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	UpdateFoo(ctx context.Context, in *UpdateFooRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	DeleteFoo(ctx context.Context, in *DeleteFooRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	GetFoo(ctx context.Context, in *GetFooRequest, opts ...grpc.CallOption) (*GetFooReply, error)
 	ListFoo(ctx context.Context, in *ListFooRequest, opts ...grpc.CallOption) (*ListFooReply, error)
 }
@@ -37,8 +38,8 @@ func NewFooClient(cc grpc.ClientConnInterface) FooClient {
 	return &fooClient{cc}
 }
 
-func (c *fooClient) CreateFoo(ctx context.Context, in *CreateFooRequest, opts ...grpc.CallOption) (*CreateFooReply, error) {
-	out := new(CreateFooReply)
+func (c *fooClient) CreateFoo(ctx context.Context, in *CreateFooRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	out := new(emptypb.Empty)
 	err := c.cc.Invoke(ctx, "/foo.v1.Foo/CreateFoo", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -46,8 +47,8 @@ func (c *fooClient) CreateFoo(ctx context.Context, in *CreateFooRequest, opts ..
 	return out, nil
 }
 
-func (c *fooClient) UpdateFoo(ctx context.Context, in *UpdateFooRequest, opts ...grpc.CallOption) (*UpdateFooReply, error) {
-	out := new(UpdateFooReply)
+func (c *fooClient) UpdateFoo(ctx context.Context, in *UpdateFooRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	out := new(emptypb.Empty)
 	err := c.cc.Invoke(ctx, "/foo.v1.Foo/UpdateFoo", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -55,8 +56,8 @@ func (c *fooClient) UpdateFoo(ctx context.Context, in *UpdateFooRequest, opts ..
 	return out, nil
 }
 
-func (c *fooClient) DeleteFoo(ctx context.Context, in *DeleteFooRequest, opts ...grpc.CallOption) (*DeleteFooReply, error) {
-	out := new(DeleteFooReply)
+func (c *fooClient) DeleteFoo(ctx context.Context, in *DeleteFooRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	out := new(emptypb.Empty)
 	err := c.cc.Invoke(ctx, "/foo.v1.Foo/DeleteFoo", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -86,9 +87,9 @@ func (c *fooClient) ListFoo(ctx context.Context, in *ListFooRequest, opts ...grp
 // All implementations must embed UnimplementedFooServer
 // for forward compatibility
 type FooServer interface {
-	CreateFoo(context.Context, *CreateFooRequest) (*CreateFooReply, error)
-	UpdateFoo(context.Context, *UpdateFooRequest) (*UpdateFooReply, error)
-	DeleteFoo(context.Context, *DeleteFooRequest) (*DeleteFooReply, error)
+	CreateFoo(context.Context, *CreateFooRequest) (*emptypb.Empty, error)
+	UpdateFoo(context.Context, *UpdateFooRequest) (*emptypb.Empty, error)
+	DeleteFoo(context.Context, *DeleteFooRequest) (*emptypb.Empty, error)
 	GetFoo(context.Context, *GetFooRequest) (*GetFooReply, error)
 	ListFoo(context.Context, *ListFooRequest) (*ListFooReply, error)
 	mustEmbedUnimplementedFooServer()
@@ -98,13 +99,13 @@ type FooServer interface {
 type UnimplementedFooServer struct {
 }
 
-func (UnimplementedFooServer) CreateFoo(context.Context, *CreateFooRequest) (*CreateFooReply, error) {
+func (UnimplementedFooServer) CreateFoo(context.Context, *CreateFooRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateFoo not implemented")
 }
-func (UnimplementedFooServer) UpdateFoo(context.Context, *UpdateFooRequest) (*UpdateFooReply, error) {
+func (UnimplementedFooServer) UpdateFoo(context.Context, *UpdateFooRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateFoo not implemented")
 }
-func (UnimplementedFooServer) DeleteFoo(context.Context, *DeleteFooRequest) (*DeleteFooReply, error) {
+func (UnimplementedFooServer) DeleteFoo(context.Context, *DeleteFooRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteFoo not implemented")
 }
 func (UnimplementedFooServer) GetFoo(context.Context, *GetFooRequest) (*GetFooReply, error) {

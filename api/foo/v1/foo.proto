@@ -4,6 +4,7 @@ package foo.v1;
 
 import "google/api/annotations.proto";
 import "errors/errors.proto";
+import "google/protobuf/empty.proto";
 
 option go_package = "foo/api/foo/v1;v1";
 
@@ -20,13 +21,13 @@ enum ErrorReason {
 }
 
 service Foo {
-	rpc CreateFoo (CreateFooRequest) returns (CreateFooReply){
+	rpc CreateFoo (CreateFooRequest) returns (google.protobuf.Empty){
 		option(google.api.http) = {
-			get: "/createfoo/{name}"
+			get: "/create/foo/{name}"
 		};
-	};
-	rpc UpdateFoo (UpdateFooRequest) returns (UpdateFooReply);
-	rpc DeleteFoo (DeleteFooRequest) returns (DeleteFooReply);
+	}
+	rpc UpdateFoo (UpdateFooRequest) returns (google.protobuf.Empty);
+	rpc DeleteFoo (DeleteFooRequest) returns (google.protobuf.Empty);
 	rpc GetFoo (GetFooRequest) returns (GetFooReply);
 	rpc ListFoo (ListFooRequest) returns (ListFooReply);
 }

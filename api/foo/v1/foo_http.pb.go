@@ -8,6 +8,7 @@ import (
 	context "context"
 	http "github.com/go-kratos/kratos/v2/transport/http"
 	binding "github.com/go-kratos/kratos/v2/transport/http/binding"
+	emptypb "google.golang.org/protobuf/types/known/emptypb"
 )
 
 // This is a compile-time assertion to ensure that this generated file
@@ -18,12 +19,12 @@ var _ = binding.EncodeURL
 const _ = http.SupportPackageIsVersion1
 
 type FooHTTPServer interface {
-	CreateFoo(context.Context, *CreateFooRequest) (*CreateFooReply, error)
+	CreateFoo(context.Context, *CreateFooRequest) (*emptypb.Empty, error)
 }
 
 func RegisterFooHTTPServer(s *http.Server, srv FooHTTPServer) {
 	r := s.Route("/")
-	r.GET("/createfoo/{name}", _Foo_CreateFoo0_HTTP_Handler(srv))
+	r.GET("/create/foo/{name}", _Foo_CreateFoo0_HTTP_Handler(srv))
 }
 
 func _Foo_CreateFoo0_HTTP_Handler(srv FooHTTPServer) func(ctx http.Context) error {
@@ -43,13 +44,13 @@ func _Foo_CreateFoo0_HTTP_Handler(srv FooHTTPServer) func(ctx http.Context) erro
 		if err != nil {
 			return err
 		}
-		reply := out.(*CreateFooReply)
+		reply := out.(*emptypb.Empty)
 		return ctx.Result(200, reply)
 	}
 }
 
 type FooHTTPClient interface {
-	CreateFoo(ctx context.Context, req *CreateFooRequest, opts ...http.CallOption) (rsp *CreateFooReply, err error)
+	CreateFoo(ctx context.Context, req *CreateFooRequest, opts ...http.CallOption) (rsp *emptypb.Empty, err error)
 }
 
 type FooHTTPClientImpl struct {
@@ -60,9 +61,9 @@ func NewFooHTTPClient(client *http.Client) FooHTTPClient {
 	return &FooHTTPClientImpl{client}
 }
 
-func (c *FooHTTPClientImpl) CreateFoo(ctx context.Context, in *CreateFooRequest, opts ...http.CallOption) (*CreateFooReply, error) {
-	var out CreateFooReply
-	pattern := "/createfoo/{name}"
+func (c *FooHTTPClientImpl) CreateFoo(ctx context.Context, in *CreateFooRequest, opts ...http.CallOption) (*emptypb.Empty, error) {
+	var out emptypb.Empty
+	pattern := "/create/foo/{name}"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/foo.v1.Foo/CreateFoo"))
 	opts = append(opts, http.PathTemplate(pattern))
