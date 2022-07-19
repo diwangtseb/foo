@@ -24,7 +24,16 @@ func (s *FooService) CreateFoo(ctx context.Context, req *pb.CreateFooRequest) (*
 	}
 	return nil, nil
 }
+
+func naming(s string) string {
+	if s == "name" {
+		return "Name"
+	}
+	return s
+}
+
 func (s *FooService) UpdateFoo(ctx context.Context, req *pb.UpdateFooRequest) (*empty.Empty, error) {
+	// use mask to update
 	return nil, nil
 }
 func (s *FooService) DeleteFoo(ctx context.Context, req *pb.DeleteFooRequest) (*empty.Empty, error) {

@@ -20,11 +20,13 @@ const _ = http.SupportPackageIsVersion1
 
 type FooHTTPServer interface {
 	CreateFoo(context.Context, *CreateFooRequest) (*emptypb.Empty, error)
+	UpdateFoo(context.Context, *UpdateFooRequest) (*emptypb.Empty, error)
 }
 
 func RegisterFooHTTPServer(s *http.Server, srv FooHTTPServer) {
 	r := s.Route("/")
 	r.GET("/create/foo/{name}", _Foo_CreateFoo0_HTTP_Handler(srv))
+	r.PUT("/update/foo", _Foo_UpdateFoo0_HTTP_Handler(srv))
 }
 
 func _Foo_CreateFoo0_HTTP_Handler(srv FooHTTPServer) func(ctx http.Context) error {
@@ -49,8 +51,28 @@ func _Foo_CreateFoo0_HTTP_Handler(srv FooHTTPServer) func(ctx http.Context) erro
 	}
 }
 
+func _Foo_UpdateFoo0_HTTP_Handler(srv FooHTTPServer) func(ctx http.Context) error {
+	return func(ctx http.Context) error {
+		var in UpdateFooRequest
+		if err := ctx.Bind(&in); err != nil {
+			return err
+		}
+		http.SetOperation(ctx, "/foo.v1.Foo/UpdateFoo")
+		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
+			return srv.UpdateFoo(ctx, req.(*UpdateFooRequest))
+		})
+		out, err := h(ctx, &in)
+		if err != nil {
+			return err
+		}
+		reply := out.(*emptypb.Empty)
+		return ctx.Result(200, reply)
+	}
+}
+
 type FooHTTPClient interface {
 	CreateFoo(ctx context.Context, req *CreateFooRequest, opts ...http.CallOption) (rsp *emptypb.Empty, err error)
+	UpdateFoo(ctx context.Context, req *UpdateFooRequest, opts ...http.CallOption) (rsp *emptypb.Empty, err error)
 }
 
 type FooHTTPClientImpl struct {
@@ -68,6 +90,19 @@ func (c *FooHTTPClientImpl) CreateFoo(ctx context.Context, in *CreateFooRequest,
 	opts = append(opts, http.Operation("/foo.v1.Foo/CreateFoo"))
 	opts = append(opts, http.PathTemplate(pattern))
 	err := c.cc.Invoke(ctx, "GET", path, nil, &out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return &out, err
+}
+
+func (c *FooHTTPClientImpl) UpdateFoo(ctx context.Context, in *UpdateFooRequest, opts ...http.CallOption) (*emptypb.Empty, error) {
+	var out emptypb.Empty
+	pattern := "/update/foo"
+	path := binding.EncodeURL(pattern, in, false)
+	opts = append(opts, http.Operation("/foo.v1.Foo/UpdateFoo"))
+	opts = append(opts, http.PathTemplate(pattern))
+	err := c.cc.Invoke(ctx, "PUT", path, in, &out, opts...)
 	if err != nil {
 		return nil, err
 	}

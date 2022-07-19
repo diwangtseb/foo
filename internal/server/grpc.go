@@ -3,6 +3,7 @@ package server
 import (
 	v1 "foo/api/foo/v1"
 	"foo/internal/conf"
+	md "foo/internal/middleware"
 	"foo/internal/service"
 
 	"github.com/go-kratos/kratos/v2/middleware/recovery"
@@ -46,6 +47,7 @@ func NewGRPCServer(c *conf.Server, sfoo *service.FooService) *grpc.Server {
 		grpc.Middleware(
 			recovery.Recovery(),
 			tracing.Server(),
+			md.FieldMask(),
 		),
 	}
 	if c.Grpc.Network != "" {

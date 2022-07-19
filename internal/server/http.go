@@ -3,6 +3,7 @@ package server
 import (
 	v1 "foo/api/foo/v1"
 	"foo/internal/conf"
+	md "foo/internal/middleware"
 	"foo/internal/service"
 
 	"github.com/go-kratos/kratos/v2/log"
@@ -20,6 +21,7 @@ func NewHTTPServer(c *conf.Server, sfoo *service.FooService, logger log.Logger) 
 			recovery.Recovery(),
 			tracing.Server(),
 			logging.Server(logger),
+			md.FieldMask(),
 		),
 	}
 	if c.Http.Network != "" {

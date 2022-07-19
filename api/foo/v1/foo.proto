@@ -5,6 +5,7 @@ package foo.v1;
 import "google/api/annotations.proto";
 import "errors/errors.proto";
 import "google/protobuf/empty.proto";
+import "google/protobuf/field_mask.proto";
 
 option go_package = "foo/api/foo/v1;v1";
 
@@ -26,7 +27,12 @@ service Foo {
 			get: "/create/foo/{name}"
 		};
 	}
-	rpc UpdateFoo (UpdateFooRequest) returns (google.protobuf.Empty);
+	rpc UpdateFoo (UpdateFooRequest) returns (google.protobuf.Empty){
+		option(google.api.http) = {
+			put: "/update/foo",
+			body: "*"
+		};
+	}
 	rpc DeleteFoo (DeleteFooRequest) returns (google.protobuf.Empty);
 	rpc GetFoo (GetFooRequest) returns (GetFooReply);
 	rpc ListFoo (ListFooRequest) returns (ListFooReply);
@@ -35,15 +41,16 @@ service Foo {
 message CreateFooRequest {
 	string name = 1;
 }
-message CreateFooReply {
-	string msg = 1;
+message FooBar{
+	string name = 1;
+	string describe = 2;
+}
+message UpdateFooRequest {
+	FooBar foobar = 1;
+	google.protobuf.FieldMask update_mask = 2;
 }
 
-message UpdateFooRequest {}
-message UpdateFooReply {}
-
 message DeleteFooRequest {}
-message DeleteFooReply {}
 
 message GetFooRequest {}
 message GetFooReply {}
