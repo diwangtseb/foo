@@ -30,6 +30,7 @@ func FieldMask() middleware.Middleware {
 					return nil, errors.New("invalid mask")
 				}
 				// dst := make(map[string]interface{})
+				// dst is origin data
 				dst := &v1.UpdateFooRequest{
 					Foobar: &v1.FooBar{},
 				}
