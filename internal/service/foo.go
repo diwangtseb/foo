@@ -6,6 +6,7 @@ import (
 	"foo/internal/biz"
 
 	"github.com/golang/protobuf/ptypes/empty"
+	"google.golang.org/protobuf/types/known/emptypb"
 )
 
 type FooService struct {
@@ -22,7 +23,7 @@ func (s *FooService) CreateFoo(ctx context.Context, req *pb.CreateFooRequest) (*
 	if err != nil {
 		return nil, pb.ErrorUnknown("create foo failed")
 	}
-	return nil, nil
+	return &emptypb.Empty{}, nil
 }
 
 func naming(s string) string {
@@ -34,10 +35,10 @@ func naming(s string) string {
 
 func (s *FooService) UpdateFoo(ctx context.Context, req *pb.UpdateFooRequest) (*empty.Empty, error) {
 	// use mask to update
-	return nil, nil
+	return &emptypb.Empty{}, nil
 }
 func (s *FooService) DeleteFoo(ctx context.Context, req *pb.DeleteFooRequest) (*empty.Empty, error) {
-	return nil, nil
+	return &emptypb.Empty{}, nil
 }
 func (s *FooService) GetFoo(ctx context.Context, req *pb.GetFooRequest) (*pb.GetFooReply, error) {
 	return &pb.GetFooReply{}, nil
